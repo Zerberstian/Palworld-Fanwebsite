@@ -64,7 +64,7 @@ h1 {
 }
 
 #map-img {
-    display: block;
+    /*display: block;*/
     margin: 0 auto;
     width: 100%;
     height: auto;
