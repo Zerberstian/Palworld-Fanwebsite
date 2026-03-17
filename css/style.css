@@ -23,6 +23,10 @@ h1 {
     text-align: center;
     
 }
+.headlines{
+    text-decoration-line: underline;
+    color: rgba(16, 201, 201, 1);
+}
 
 .navbar {
     position: fixed;
@@ -30,6 +34,7 @@ h1 {
     width: 100%;
     background-color: rgba(0,0,0,0.85);
     padding: 10px 0;
+    z-index: 1000; /* fixiert Naavbar oben  (immer im fg ) */
 }
 
 .navbar ul {
@@ -64,7 +69,7 @@ h1 {
 }
 
 #map-img {
-    /*display: block;*/
+    /*display: block;*/ /* <-- ka warum du noch im code*/
     margin: 0 auto;
     width: 100%;
     height: auto;
@@ -72,6 +77,19 @@ h1 {
     cursor: zoom-in;
 }
 
+.palimg {
+    margin: 0 auto;
+    width: 80%; 
+    height: auto;
+}
+
 #Lieblingspals, #karteundregionen {
   scroll-margin-top: 100px;
+}
+
+.block-list {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 Spalten */
+    gap: 40px;
 }
