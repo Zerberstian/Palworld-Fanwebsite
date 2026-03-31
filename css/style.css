@@ -23,6 +23,7 @@ h1 {
     text-align: center;
     
 }
+
 .headlines{
     text-decoration-line: underline;
     color: rgba(16, 201, 201, 1);
@@ -84,7 +85,7 @@ h1 {
 }
 
 #Lieblingspals, #karteundregionen {
-  scroll-margin-top: 100px;
+    scroll-margin-top: 100px;
 }
 
 .block-list {
