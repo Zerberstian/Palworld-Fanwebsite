@@ -94,3 +94,11 @@ h1 {
     grid-template-columns: 1fr 1fr; /* 2 Spalten */
     gap: 40px;
 }
+
+.item-Image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
