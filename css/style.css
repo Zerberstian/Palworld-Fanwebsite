@@ -3,12 +3,17 @@ html {
 }
 
 body {
+    cursor: url("../assets/Moai_Pointer_32.png"), auto;
     margin: 0;
     background-image: url("https://images8.alphacoders.com/135/thumb-1920-1352211.jpeg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;  
     color: white;  
+}
+
+a, button {
+    cursor: url("../assets/Moai_Cursor_32.png"), pointer;
 }
 
 .content-box {
@@ -84,7 +89,7 @@ h1 {
     height: auto;
 }
 
-#Lieblingspals, #karteundregionen {
+#Lieblingspals, #karteundregionen, #Items, #Guide {
     scroll-margin-top: 100px;
 }
 
