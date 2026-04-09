@@ -19,7 +19,12 @@ a, button {
 .content-box {
     width: 80%;
     margin: 100px auto;
-    background-color: rgba(0,0,0,0.85);
+    background: linear-gradient(
+        80deg,
+        rgba(113, 159, 245, 0.85) 0%,
+        rgba(0, 0, 0, 0.85) 50%,
+        rgba(123, 48, 209, 0.87) 100%
+        );
     padding: 20px;
     border-radius: 20px;   
 }
