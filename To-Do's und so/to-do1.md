@@ -2,6 +2,8 @@
 
 ## things that whould be done as of 12.04.26
 
+- add a sector about breeding Pals and load Json with the Data
+
 - Refactor the website structure and category flow to create smoother transitions between sections (e.g., Main → Items).
 
 - Improve the main website and add additional subpages to enhance overall user experience.
