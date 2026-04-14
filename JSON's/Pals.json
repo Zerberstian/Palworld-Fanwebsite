@@ -1,0 +1,62 @@
+{
+  "pals": [
+    {
+      "paldex_number": 1,
+      "name": {
+        "display": "Lamball",
+        "internal_id": "lamball"
+      },
+      "icon_path": "assets/icons/pals/lamball.png",
+      "types": ["Neutral"],
+      "description": "A fluffy Pal that produces wool.",
+      "work_suitability": {
+        "planting": 0,
+        "watering": 0,
+        "mining": 0,
+        "logging": 0,
+        "transporting": 1,
+        "kindling": 0,
+        "cooling": 0,
+        "generating_electricity": 0,
+        "handiwork": 1,
+        "gathering": 0,
+        "farming": 1
+      },
+      "item_drops": [
+        {
+          "item_name": "Wool",
+          "drop_chance": 0.8
+        }
+      ]
+    },
+    {
+      "paldex_number": 2,
+      "name": {
+        "display": "Cattiva",
+        "internal_id": "cattiva"
+      },
+      "icon_path": "assets/icons/pals/cattiva.png",
+      "types": ["Dark"],
+      "description": "A mischievous Pal that likes to carry items.",
+      "work_suitability": {
+        "planting": 0,
+        "watering": 0,
+        "mining": 1,
+        "logging": 0,
+        "transporting": 1,
+        "kindling": 0,
+        "cooling": 0,
+        "generating_electricity": 0,
+        "handiwork": 1,
+        "gathering": 1,
+        "farming": 0
+      },
+      "item_drops": [
+        {
+          "item_name": "Claw",
+          "drop_chance": 0.3
+        }
+      ]
+    }
+  ]
+}
