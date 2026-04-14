@@ -113,3 +113,16 @@ h1 {
     transition: transform 0.3s ease;
     cursor: pointer;
 }
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.85);
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1; /* damit die Footer nicht über der Navbar liegt */
+    border-radius: 20px 20px 20px 0px;
+}
