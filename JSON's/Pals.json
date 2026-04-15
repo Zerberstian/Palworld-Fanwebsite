@@ -1,180 +1,216 @@
 {
-  "pals": [
-    {
-      "paldex_number": "1",
-      "name": {
-        "display": "Lamball",
-        "internal_id": "lamball"
-      },
-      "icon_path": "../assets/Pal_Icons/T_SheepBall_icon_normal.png",
-      "types": ["Neutral"],
-      "description": "Ein Spaziergang auf einem Hügel neigt dazu, mit diesem Kumpel zu enden, der wieder nach unten taumelt. Dies führt dazu, dass es schwindlig wird und sich nicht bewegen kann, was es leicht macht, es zu erfassen und zu töten. Infolgedessen ist dieser Kumpel bis ganz unten in der Nahrungskette selbst gestürzt.",
-      "work_suitability": {
-        "planting": 0,
-        "watering": 0,
-        "mining": 0,
-        "logging": 0,
-        "transporting": 1,
-        "kindling": 0,
-        "cooling": 0,
-        "generating_electricity": 0,
-        "handiwork": 1,
-        "gathering": 0,
-        "farming": 1,
-        "medicine production": 0
-      },
-      "item_drops": [
+    "pals": [
         {
-          "item_name": "Wool",
-          "drop_chance": 100,
-          "amount": "1-3"
+            "paldex_number": "1",
+            "name": {
+                "display": "Lamball",
+                "internal_id": "lamball"
+            },
+            "icon_path": "../assets/Pal_Icons/T_SheepBall_icon_normal.png",
+            "types": [
+                "Neutral"
+            ],
+            "description": "Ein Spaziergang auf einem Hügel neigt dazu, mit diesem Kumpel zu enden, der wieder nach unten taumelt. Dies führt dazu, dass es schwindlig wird und sich nicht bewegen kann, was es leicht macht, es zu erfassen und zu töten. Infolgedessen ist dieser Kumpel bis ganz unten in der Nahrungskette selbst gestürzt.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 0,
+                "logging": 0,
+                "transporting": 1,
+                "kindling": 0,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 1,
+                "gathering": 0,
+                "farming": 1,
+                "medicine production": 0
+            },
+            "item_drops": [
+                {
+                    "item_name": "Wool",
+                    "drop_chance": 100,
+                    "amount": "1-3"
+                },
+                {
+                    "item_name": "Lamball Meat",
+                    "drop_chance": 100,
+                    "amount": "1-1"
+                }
+            ]
         },
         {
-          "item_name": "Lamball Meat",
-          "drop_chance": 100,
-          "amount": "1-1"
-        }
-      ]
-    },
-    {
-      "paldex_number": "2",
-      "name": {
-        "display": "Cattiva",
-        "internal_id": "cattiva"
-      },
-      "icon_path": "../assets/Pal_Icons/T_PinkCat_icon_normal.png",
-      "types": ["Neutral"],
-      "description": "Auf den ersten Blick wirkt es selbstbewusst, doch in Wirklichkeit ist es schwach und feige. Von einer pinken Katze ausgetrickst zu werden, ist in vielerlei Hinsicht die größte Schande.",
-      "work_suitability": {
-        "planting": 0,
-        "watering": 0,
-        "mining": 1,
-        "logging": 0,
-        "transporting": 1,
-        "kindling": 0,
-        "cooling": 0,
-        "generating_electricity": 0,
-        "handiwork": 1,
-        "gathering": 1,
-        "farming": 0,
-        "medicine production": 0
-      },
-      "item_drops": [
-        {
-          "item_name": "Red Berries",
-          "drop_chance": 100,
-          "amount": "1-1"
-
-        }
-      ]
-    },
-    {
-      "paldex_number": "3",
-      "name": {
-        "display": "Chikipi",
-        "internal_id": "chikipi"
-      },
-      "icon_path": "../assets/Pal_Icons/T_ChickenPal_icon_normal.png",
-      "types": ["Neutral"],
-      "description": "Extrem schwach und viel zu lecker. Es ist einer der schwächsten Freunde neben SheepBall. Egal wie viele gejagt werden, sie erscheinen einfach weiter.",
-      "work_suitability": {
-        "planting": 0,
-        "watering": 0,
-        "mining": 0,
-        "logging": 0,
-        "transporting": 0,
-        "kindling": 0,
-        "cooling": 0,
-        "generating_electricity": 0,
-        "handiwork": 0,
-        "gathering": 1,
-        "farming": 1,
-        "medicine production": 0
-      },
-      "item_drops": [
-        {
-          "item_name": "Egg",
-          "drop_chance": "100",
-          "amount": "1-1"
+            "paldex_number": "2",
+            "name": {
+                "display": "Cattiva",
+                "internal_id": "cattiva"
+            },
+            "icon_path": "../assets/Pal_Icons/T_PinkCat_icon_normal.png",
+            "types": [
+                "Neutral"
+            ],
+            "description": "Auf den ersten Blick wirkt es selbstbewusst, doch in Wirklichkeit ist es schwach und feige. Von einer pinken Katze ausgetrickst zu werden, ist in vielerlei Hinsicht die größte Schande.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 1,
+                "logging": 0,
+                "transporting": 1,
+                "kindling": 0,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 1,
+                "gathering": 1,
+                "farming": 0,
+                "medicine production": 0
+            },
+            "item_drops": [
+                {
+                    "item_name": "Red Berries",
+                    "drop_chance": 100,
+                    "amount": "1-1"
+                }
+            ]
         },
         {
-          "item_name": "Chikipi Meat",
-          "drop_chance": 100,
-          "amount": "1-1"
-        }
-      ]
-    },
-    {
-      "paldex_number": "4",
-      "name": {
-        "display": "Lifmurk",
-        "internal_id": "lifmurk"
-      },
-      "icon_path": "../assets/Pal_Icons/T_Carbunclo_icon_normal.png",
-      "types": ["Pflanze"],
-      "description": "Intelligent wie ein fünf- bis siebenjähriges Menschenkind. Es ist ein wunderbarer Partner, aber es gab mehr als ein paar Fälle Wo sie ihren Meister getötet haben, nachdem sie gelernt haben, Waffen zu benutzen.",
-      "work_suitability": {
-        "planting": 1,
-        "watering": 0,
-        "mining": 0,
-        "logging": 1,
-        "transporting": 0,
-        "kindling": 0,
-        "cooling": 0,
-        "generating_electricity": 0,
-        "handiwork": 1,
-        "gathering": 1,
-        "farming": 0,
-        "medicine production": 1
-      },
-      "item_drops": [
-        {
-          "item_name": "Berry Seeds",
-          "drop_chance": 100,
-          "amount": "1-1"
+            "paldex_number": "3",
+            "name": {
+                "display": "Chikipi",
+                "internal_id": "chikipi"
+            },
+            "icon_path": "../assets/Pal_Icons/T_ChickenPal_icon_normal.png",
+            "types": [
+                "Neutral"
+            ],
+            "description": "Extrem schwach und viel zu lecker. Es ist einer der schwächsten Freunde neben SheepBall. Egal wie viele gejagt werden, sie erscheinen einfach weiter.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 0,
+                "logging": 0,
+                "transporting": 0,
+                "kindling": 0,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 0,
+                "gathering": 1,
+                "farming": 1,
+                "medicine production": 0
+            },
+            "item_drops": [
+                {
+                    "item_name": "Egg",
+                    "drop_chance": "100",
+                    "amount": "1-1"
+                },
+                {
+                    "item_name": "Chikipi Meat",
+                    "drop_chance": 100,
+                    "amount": "1-1"
+                }
+            ]
         },
         {
-          "item_name": "Low Grade Medical Supplies",
-          "drop_chance": 20,
-          "amount": "1-1"
-        }
-      ]
-    },
-    {
-      "paldex_number": "5",
-      "name": {
-        "display": "Foxsparks",
-        "internal_id": "foxsparks"
-      },
-      "icon_path": "../assets/Pal_Icons/T_Kitsunebi_icon_normal.png",
-      "types": ["Feuer"],
-      "description": "Es ist ungelernt, das Feuer von dem Moment an zu kontrollieren, als es geboren wird und neigt dazu, an den Flammen zu ersticken, die es unbeabsichtigt atmet. Foxsparks-Niesen sind eine der Hauptursachen für Waldbrände.",
-      "work_suitability": {
-        "planting": 0,
-        "watering": 0,
-        "mining": 0,
-        "logging": 0,
-        "transporting": 0,
-        "kindling": 1,
-        "cooling": 0,
-        "generating_electricity": 0,
-        "handiwork": 0,
-        "gathering": 0,
-        "farming": 0,
-        "medicine production": 0
-      },
-      "item_drops": [
-        {
-          "item_name": "Leather",
-          "drop_chance": 100,
-          "amount": "1-1"
+            "paldex_number": "4",
+            "name": {
+                "display": "Lifmurk",
+                "internal_id": "lifmurk"
+            },
+            "icon_path": "../assets/Pal_Icons/T_Carbunclo_icon_normal.png",
+            "types": [
+                "Pflanze"
+            ],
+            "description": "Intelligent wie ein fünf- bis siebenjähriges Menschenkind. Es ist ein wunderbarer Partner, aber es gab mehr als ein paar Fälle Wo sie ihren Meister getötet haben, nachdem sie gelernt haben, Waffen zu benutzen.",
+            "work_suitability": {
+                "planting": 1,
+                "watering": 0,
+                "mining": 0,
+                "logging": 1,
+                "transporting": 0,
+                "kindling": 0,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 1,
+                "gathering": 1,
+                "farming": 0,
+                "medicine production": 1
+            },
+            "item_drops": [
+                {
+                    "item_name": "Berry Seeds",
+                    "drop_chance": 100,
+                    "amount": "1-1"
+                },
+                {
+                    "item_name": "Low Grade Medical Supplies",
+                    "drop_chance": 20,
+                    "amount": "1-1"
+                }
+            ]
         },
         {
-          "item_name": "Flame Organ",
-          "drop_chance": 100,
-          "amount": "1-2"
+            "paldex_number": "5",
+            "name": {
+                "display": "Foxsparks",
+                "internal_id": "foxsparks"
+            },
+            "icon_path": "../assets/Pal_Icons/T_Kitsunebi_icon_normal.png",
+            "types": [
+                "Feuer"
+            ],
+            "description": "Es ist ungelernt, das Feuer von dem Moment an zu kontrollieren, als es geboren wird und neigt dazu, an den Flammen zu ersticken, die es unbeabsichtigt atmet. Foxsparks-Niesen sind eine der Hauptursachen für Waldbrände.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 0,
+                "logging": 0,
+                "transporting": 0,
+                "kindling": 1,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 0,
+                "gathering": 0,
+                "farming": 0,
+                "medicine production": 0
+            },
+            "item_drops": [
+                {
+                    "item_name": "Leather",
+                    "drop_chance": 100,
+                    "amount": "1-1"
+                },
+                {
+                    "item_name": "Flame Organ",
+                    "drop_chance": 100,
+                    "amount": "1-2"
+                }
+            ]
+        },
+        {
+            "paldex_number": "5B",
+            "name": {
+                "display": "Foxparks Cryst",
+                "internal_id": "foxparks cryst"
+            },
+            "icon_path": "../assets/Pal_Icons/T_Kitsunebi_Ice_icon_normal.png",
+            "types": [
+                "Eis"
+            ],
+            "description": "Es kann kalte Luft von Geburt an nicht richtig kontrollieren und neigt dazu, an dem Frost zu ersticken, den es ungewollt einatmet. Wenn Foxparks Cryst sich erkältet, gefriert sein Nasensekret, was ihm das Atmen erschwert und es in Panik versetzt.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 0,
+                "logging": 0,
+                "transporting": 0,
+                "kindling": 0,
+                "cooling": 0,
+                "generating_electricity": 0,
+                "handiwork": 0,
+                "gathering": 0,
+                "farming": 0,
+                "medicine production": 0
+            },
+            "item_drops": []
         }
-      ]
-    }
-  ]
+    ]
 }
