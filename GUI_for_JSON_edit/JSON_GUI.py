@@ -276,6 +276,36 @@ pal_listbox = Listbox(editor_frame, width=30)
 pal_listbox.grid(row=0, column=0, rowspan=50)
 pal_listbox.bind("<<ListboxSelect>>", load_selected_pal)
 
+Label(editor_frame, text="Number").grid(row=0, column=1, sticky="w")
+entry_number = Entry(editor_frame)
+entry_number.grid(row=0, column=2)
+
+Label(editor_frame, text="Name").grid(row=1, column=1, sticky="w")
+entry_name = Entry(editor_frame)
+entry_name.grid(row=1, column=2)
+
+Label(editor_frame, text="Internal ID").grid(row=2, column=1, sticky="w")
+entry_id = Entry(editor_frame)
+entry_id.grid(row=2, column=2)
+
+Label(editor_frame, text="Types (comma separated)").grid(row=3, column=1, sticky="w")
+entry_types = Entry(editor_frame)
+entry_types.grid(row=3, column=2)
+
+Label(editor_frame, text="Icon Filename").grid(row=4, column=1, sticky="w")
+entry_icon = Entry(editor_frame)
+entry_icon.grid(row=4, column=2)
+
+Button(editor_frame, text="Preview Icon", command=preview_icon).grid(row=4, column=3)
+
+label_icon_preview = Label(editor_frame, text="No Preview")
+label_icon_preview.grid(row=5, column=3)
+
+Label(editor_frame, text="Description").grid(row=5, column=1, sticky="nw")
+text_desc = Text(editor_frame, height=5, width=30)
+text_desc.grid(row=5, column=2)
+
+'''
 # FIELDS
 entry_number = Entry(editor_frame); entry_number.grid(row=0, column=1)
 entry_name = Entry(editor_frame); entry_name.grid(row=1, column=1)
@@ -293,6 +323,7 @@ label_icon_preview.grid(row=5, column=2)
 
 text_desc = Text(editor_frame, height=5, width=30)
 text_desc.grid(row=5, column=1)
+'''
 
 # WORK SUITABILITY
 work_entries = {}
