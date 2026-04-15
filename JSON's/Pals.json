@@ -203,7 +203,7 @@
                 "logging": 0,
                 "transporting": 0,
                 "kindling": 0,
-                "cooling": 0,
+                "cooling": 1,
                 "generating_electricity": 0,
                 "handiwork": 0,
                 "gathering": 0,

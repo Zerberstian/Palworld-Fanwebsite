@@ -5,55 +5,39 @@ from PIL import Image, ImageTk
 
 # ============================================================
 # NOTE
-# This app was AI-generated and later modified.
-# It is used as a JSON editor / viewer for Pal data.
+# AI-generated editor tool for managing Pal JSON data.
 # ============================================================
 
 # ============================================================
-# PATHS (file locations)
+# PATHS
 # ============================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# JSON data file (all Pal data is stored here)
 JSON_PATH = os.path.join(BASE_DIR, "..", "JSON's", "Pals.json")
-
-# Folder where all icon images are stored
 ICON_DIR = os.path.join(BASE_DIR, "..", "Icons")
 
-
 # ============================================================
-# JSON HANDLING (load / save data)
+# JSON HANDLING
 # ============================================================
 
 def load_json():
-    """Load Pal data from JSON file"""
     with open(JSON_PATH, "r", encoding="utf-8") as file:
         return json.load(file)
 
-
 def save_json():
-    """Save current data back into JSON file"""
     with open(JSON_PATH, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
-
-# Load data once at startup
 data = load_json()
-
-# Keeps track of which Pal is currently selected
 current_index = 0
-
-# Needed to prevent images from being garbage collected
 current_image = None
 
 
 # ============================================================
-# FRAME SWITCHING (menu / dex / editor)
+# FRAME SWITCHING
 # ============================================================
 
 def show_frame(frame):
-    """Hide all frames and show only the selected one"""
     menu_frame.pack_forget()
     dex_frame.pack_forget()
     editor_frame.pack_forget()
@@ -61,23 +45,20 @@ def show_frame(frame):
 
 
 # ============================================================
-# DEX DISPLAY (read-only view of Pal)
+# DEX VIEW
 # ============================================================
 
 def display_pal(index):
-    """Display Pal information in the Dex view"""
     global current_image
 
     pal = data["pals"][index]
 
-    # Basic text info
     label_number.config(text=f"#{pal['paldex_number']}")
     label_name.config(text=pal["name"]["display"])
     label_id.config(text=f"ID: {pal['name']['internal_id']}")
     label_types.config(text=" / ".join(pal["types"]))
     label_desc.config(text=pal["description"])
 
-    # Load icon image
     try:
         icon_path = os.path.join(ICON_DIR, pal["icon_path"])
 
@@ -88,24 +69,20 @@ def display_pal(index):
         label_icon.config(image=current_image, text="")
 
     except:
-        # Fallback if image is missing
-        label_icon.config(image="", text="No Image")
+        label_icon.config(text="No Image", image="")
 
 
 # ============================================================
-# NAVIGATION (next / previous Pal)
+# NAVIGATION
 # ============================================================
 
 def next_pal():
-    """Go to next Pal"""
     global current_index
     if current_index < len(data["pals"]) - 1:
         current_index += 1
         display_pal(current_index)
 
-
 def prev_pal():
-    """Go to previous Pal"""
     global current_index
     if current_index > 0:
         current_index -= 1
@@ -113,11 +90,10 @@ def prev_pal():
 
 
 # ============================================================
-# ICON PREVIEW (editor helper)
+# ICON PREVIEW
 # ============================================================
 
 def preview_icon():
-    """Preview icon from filename entered in editor"""
     global current_image
 
     icon_name = entry_icon.get().strip()
@@ -138,12 +114,10 @@ def preview_icon():
 
 
 # ============================================================
-# EDITOR: LOAD SELECTED PAL INTO FIELDS
+# LOAD SELECTED PAL INTO EDITOR
 # ============================================================
 
 def load_selected_pal(event):
-    """Load selected Pal into editor fields"""
-
     global current_index
 
     selection = pal_listbox.curselection()
@@ -153,7 +127,7 @@ def load_selected_pal(event):
     current_index = selection[0]
     pal = data["pals"][current_index]
 
-    # Fill basic fields
+    # BASIC INFO
     entry_number.delete(0, END)
     entry_number.insert(0, pal["paldex_number"])
 
@@ -172,24 +146,22 @@ def load_selected_pal(event):
     text_desc.delete("1.0", END)
     text_desc.insert("1.0", pal["description"])
 
-    # Fill work suitability spinboxes
+    # WORK SUITABILITY
     for key in work_entries:
         work_entries[key].delete(0, END)
         work_entries[key].insert(0, pal["work_suitability"].get(key, 0))
 
-    # Fill item drops list
+    # ITEM DROPS
     item_listbox.delete(0, END)
     for item in pal["item_drops"]:
         item_listbox.insert(END, f"{item['item_name']}|{item['drop_chance']}|{item['amount']}")
 
 
 # ============================================================
-# NEW PAL (clear editor for new entry)
+# NEW PAL
 # ============================================================
 
 def new_pal():
-    """Reset editor for creating a new Pal"""
-
     global current_index
     current_index = None
 
@@ -200,7 +172,6 @@ def new_pal():
     entry_icon.delete(0, END)
     text_desc.delete("1.0", END)
 
-    # Reset all work values to 0
     for key in work_entries:
         work_entries[key].delete(0, END)
         work_entries[key].insert(0, "0")
@@ -209,12 +180,10 @@ def new_pal():
 
 
 # ============================================================
-# ITEM SYSTEM (add loot drops)
+# ADD ITEM
 # ============================================================
 
 def add_item():
-    """Add item drop to listbox"""
-
     name = entry_item_name.get()
     chance = entry_item_chance.get()
     amount = entry_item_amount.get()
@@ -224,18 +193,14 @@ def add_item():
 
 
 # ============================================================
-# SAVE SYSTEM (write changes back to JSON)
+# SAVE
 # ============================================================
 
 def save_changes():
-    """Save editor data into JSON file"""
-
     global current_index
 
-    # Convert spinboxes into dictionary
     work_data = {k: int(work_entries[k].get()) for k in work_entries}
 
-    # Convert item listbox into structured data
     item_drops = []
     for i in range(item_listbox.size()):
         raw = item_listbox.get(i)
@@ -247,7 +212,6 @@ def save_changes():
                 "amount": parts[2]
             })
 
-    # Create full Pal entry
     new_entry = {
         "paldex_number": entry_number.get(),
         "name": {
@@ -261,7 +225,6 @@ def save_changes():
         "item_drops": item_drops
     }
 
-    # Update existing or add new
     if current_index is not None:
         data["pals"][current_index] = new_entry
     else:
@@ -273,20 +236,17 @@ def save_changes():
 
 
 # ============================================================
-# LIST REFRESH (update sidebar list)
+# LIST REFRESH
 # ============================================================
 
 def refresh_list():
-    """Reload Pal list in UI"""
-
     pal_listbox.delete(0, END)
-
     for pal in data["pals"]:
         pal_listbox.insert(END, f"#{pal['paldex_number']} - {pal['name']['display']}")
 
 
 # ============================================================
-# UI SETUP
+# UI ROOT
 # ============================================================
 
 root = Tk()
@@ -295,7 +255,7 @@ root.minsize(800, 600)
 
 
 # ============================================================
-# MENU SCREEN
+# MENU
 # ============================================================
 
 menu_frame = Frame(root)
@@ -305,7 +265,7 @@ Button(menu_frame, text="Editor", command=lambda: show_frame(editor_frame)).pack
 
 
 # ============================================================
-# DEX SCREEN (view mode)
+# DEX VIEW
 # ============================================================
 
 dex_frame = Frame(root)
@@ -334,61 +294,65 @@ Button(dex_frame, text="Back", command=lambda: show_frame(menu_frame)).pack()
 
 
 # ============================================================
-# EDITOR SCREEN (data editing UI)
+# EDITOR (RESTRUCTURED UX)
 # ============================================================
 
 editor_frame = Frame(root)
 
 # ----------------------------
-# Pal list (left side)
+# PAL LIST
 # ----------------------------
 pal_listbox = Listbox(editor_frame, width=30)
-pal_listbox.grid(row=0, column=0, rowspan=50)
+pal_listbox.grid(row=0, column=0, rowspan=100, sticky="ns")
 pal_listbox.bind("<<ListboxSelect>>", load_selected_pal)
 
 
-# ----------------------------
-# BASIC INFO FIELDS
-# ----------------------------
+# ============================================================
+# BASIC INFO
+# ============================================================
 
-Label(editor_frame, text="Number").grid(row=0, column=1, sticky="w")
+Label(editor_frame, text="=== BASIC INFO ===").grid(row=0, column=1, sticky="w")
+
+Label(editor_frame, text="Number").grid(row=1, column=1, sticky="w")
 entry_number = Entry(editor_frame)
-entry_number.grid(row=0, column=2)
+entry_number.grid(row=1, column=2)
 
-Label(editor_frame, text="Name").grid(row=1, column=1, sticky="w")
+Label(editor_frame, text="Name").grid(row=2, column=1, sticky="w")
 entry_name = Entry(editor_frame)
-entry_name.grid(row=1, column=2)
+entry_name.grid(row=2, column=2)
 
-Label(editor_frame, text="Internal ID").grid(row=2, column=1, sticky="w")
+Label(editor_frame, text="Internal ID").grid(row=3, column=1, sticky="w")
 entry_id = Entry(editor_frame)
-entry_id.grid(row=2, column=2)
+entry_id.grid(row=3, column=2)
 
-Label(editor_frame, text="Types (comma separated)").grid(row=3, column=1, sticky="w")
+Label(editor_frame, text="Types").grid(row=4, column=1, sticky="w")
 entry_types = Entry(editor_frame)
-entry_types.grid(row=3, column=2)
+entry_types.grid(row=4, column=2)
 
-Label(editor_frame, text="Icon Filename").grid(row=4, column=1, sticky="w")
+Label(editor_frame, text="Icon").grid(row=5, column=1, sticky="w")
 entry_icon = Entry(editor_frame)
-entry_icon.grid(row=4, column=2)
+entry_icon.grid(row=5, column=2)
 
-Button(editor_frame, text="Preview Icon", command=preview_icon).grid(row=4, column=3)
+Button(editor_frame, text="Preview Icon", command=preview_icon).grid(row=5, column=3)
 
 label_icon_preview = Label(editor_frame, text="No Preview")
-label_icon_preview.grid(row=5, column=3)
+label_icon_preview.grid(row=6, column=3)
 
-Label(editor_frame, text="Description").grid(row=5, column=1, sticky="nw")
+Label(editor_frame, text="Description").grid(row=6, column=1, sticky="nw")
 text_desc = Text(editor_frame, height=5, width=30)
-text_desc.grid(row=5, column=2)
+text_desc.grid(row=6, column=2)
 
 
 # ============================================================
-# WORK SUITABILITY SYSTEM (spinboxes)
+# WORK SUITABILITY
 # ============================================================
+
+row = 7
+
+Label(editor_frame, text="=== WORK SUITABILITY ===").grid(row=row, column=1, sticky="w")
+row += 1
 
 work_entries = {}
-row = 6
-
-# Auto-generate from JSON keys (future-proof)
 work_keys = data["pals"][0]["work_suitability"].keys()
 
 for key in work_keys:
@@ -402,35 +366,46 @@ for key in work_keys:
 
 
 # ============================================================
-# ITEM DROPS SYSTEM
+# ITEM DROPS
 # ============================================================
 
+Label(editor_frame, text="=== ITEM DROPS ===").grid(row=row, column=1, sticky="w")
+row += 1
+
+Label(editor_frame, text="Item Name").grid(row=row, column=1, sticky="w")
 entry_item_name = Entry(editor_frame)
-entry_item_name.grid(row=row, column=1)
+entry_item_name.grid(row=row, column=2)
+row += 1
 
+Label(editor_frame, text="Drop Chance").grid(row=row, column=1, sticky="w")
 entry_item_chance = Entry(editor_frame)
-entry_item_chance.grid(row=row+1, column=1)
+entry_item_chance.grid(row=row, column=2)
+row += 1
 
+Label(editor_frame, text="Amount").grid(row=row, column=1, sticky="w")
 entry_item_amount = Entry(editor_frame)
-entry_item_amount.grid(row=row+2, column=1)
+entry_item_amount.grid(row=row, column=2)
+row += 1
 
-Button(editor_frame, text="Add Item", command=add_item).grid(row=row+3, column=1)
+Button(editor_frame, text="➕ Add Item", command=add_item).grid(row=row, column=2)
+row += 1
 
-item_listbox = Listbox(editor_frame)
-item_listbox.grid(row=row+4, column=1)
+item_listbox = Listbox(editor_frame, width=40)
+item_listbox.grid(row=row, column=1, columnspan=2)
+row += 1
 
 
 # ============================================================
 # ACTION BUTTONS
 # ============================================================
 
-Button(editor_frame, text="New", command=new_pal).grid(row=row+5, column=1)
-Button(editor_frame, text="Save", command=save_changes).grid(row=row+6, column=1)
-Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(row=row+7, column=1)
+Button(editor_frame, text="New Pal", command=new_pal).grid(row=row, column=1)
+Button(editor_frame, text="Save Pal", command=save_changes).grid(row=row, column=2)
+Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(row=row, column=3)
 
 
 # ============================================================
-# START APP
+# START
 # ============================================================
 
 menu_frame.pack()
