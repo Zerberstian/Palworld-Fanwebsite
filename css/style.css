@@ -6,11 +6,14 @@ html {
 body {
     cursor: url("../assets/Meme_Cursor_32.png"), auto;
     margin: 0;
-    background-image: url("https://images8.alphacoders.com/135/thumb-1920-1352211.jpeg");
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url("https://images8.alphacoders.com/135/thumb-1920-1352211.jpeg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;  
     color: white;  
+    font-family: 'Calibri';
 }
 
 a, button {
@@ -21,10 +24,10 @@ a, button {
     width: 80%;
     margin: 100px auto;
     background: linear-gradient(
-        80deg,
-        rgba(113, 159, 245, 0.85) 0%,
-        rgba(0, 0, 0, 0.85) 50%,
-        rgba(123, 48, 209, 0.87) 100%
+        85deg,
+        rgba(138, 197, 245, 0.85) 0%,
+        rgba(0, 0, 0, 0.788) 50%,
+        rgba(223, 157, 217, 0.87) 100%
         );
     padding: 20px;
     border-radius: 20px;   
@@ -37,7 +40,7 @@ h1 {
 
 .headlines{
     text-decoration-line: underline;
-    color: rgba(16, 201, 201, 1);
+    color: rgba(192, 255, 91, 0.932);
 }
 
 .navbar {
@@ -125,4 +128,17 @@ h1 {
     height: auto;
     z-index: -1; /* damit die Footer nicht über der Navbar liegt */
     border-radius: 20px 20px 20px 0px;
+}
+.links a {
+    color: rgb(238, 219, 114);
+    text-decoration: none;
+    font-size: 18px;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+}
+
+.intro {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.9);
 }

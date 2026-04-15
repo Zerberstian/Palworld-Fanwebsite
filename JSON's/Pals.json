@@ -1,7 +1,7 @@
 {
   "pals": [
     {
-      "paldex_number": 1,
+      "paldex_number": "1",
       "name": {
         "display": "Lamball",
         "internal_id": "lamball"
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "paldex_number": 2,
+      "paldex_number": "2",
       "name": {
         "display": "Cattiva",
         "internal_id": "cattiva"
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "paldex_number": 3,
+      "paldex_number": "3",
       "name": {
         "display": "Chikipi",
         "internal_id": "chikipi"
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "paldex_number": 4,
+      "paldex_number": "4",
       "name": {
         "display": "Lifmurk",
         "internal_id": "lifmurk"
@@ -137,6 +137,42 @@
           "item_name": "Low Grade Medical Supplies",
           "drop_chance": 20,
           "amount": "1-1"
+        }
+      ]
+    },
+    {
+      "paldex_number": "5",
+      "name": {
+        "display": "Foxsparks",
+        "internal_id": "foxsparks"
+      },
+      "icon_path": "../assets/Pal_Icons/T_Kitsunebi_icon_normal.png",
+      "types": ["Feuer"],
+      "description": "Es ist ungelernt, das Feuer von dem Moment an zu kontrollieren, als es geboren wird und neigt dazu, an den Flammen zu ersticken, die es unbeabsichtigt atmet. Foxsparks-Niesen sind eine der Hauptursachen für Waldbrände.",
+      "work_suitability": {
+        "planting": 0,
+        "watering": 0,
+        "mining": 0,
+        "logging": 0,
+        "transporting": 0,
+        "kindling": 1,
+        "cooling": 0,
+        "generating_electricity": 0,
+        "handiwork": 0,
+        "gathering": 0,
+        "farming": 0,
+        "medicine production": 0
+      },
+      "item_drops": [
+        {
+          "item_name": "Leather",
+          "drop_chance": 100,
+          "amount": "1-1"
+        },
+        {
+          "item_name": "Flame Organ",
+          "drop_chance": 100,
+          "amount": "1-2"
         }
       ]
     }
