@@ -3,6 +3,10 @@ import os
 import json
 from PIL import Image, ImageTk
 
+# This App was AI generated, so expect some weird code and no comments, I will add comments later, maybe
+# This is not my Code and i dont take Creddit for it.
+# I only use it for time saving and to have a better overview of the JSON data.
+
 # ----------------------------
 # Paths
 # ----------------------------
