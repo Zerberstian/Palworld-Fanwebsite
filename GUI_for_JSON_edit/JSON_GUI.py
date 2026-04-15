@@ -43,9 +43,14 @@ def show_frame(frame):
     editor_frame.pack_forget()
     frame.pack(fill="both", expand=True)
 
+    # Auto-select first Pal when opening Dex
+    if frame == dex_frame and data["pals"]:
+        display_pal(current_index)
+        select_dex_item()
+
 
 # ============================================================
-# DEX VIEW
+# DEX VIEW (DISPLAY)
 # ============================================================
 
 def display_pal(index):
@@ -73,7 +78,7 @@ def display_pal(index):
 
 
 # ============================================================
-# NAVIGATION
+# DEX NAVIGATION
 # ============================================================
 
 def next_pal():
@@ -81,12 +86,46 @@ def next_pal():
     if current_index < len(data["pals"]) - 1:
         current_index += 1
         display_pal(current_index)
+        select_dex_item()
+
 
 def prev_pal():
     global current_index
     if current_index > 0:
         current_index -= 1
         display_pal(current_index)
+        select_dex_item()
+
+
+# ============================================================
+# DEX LIST CONTROL (NEW)
+# ============================================================
+
+def load_dex_selection(event):
+    global current_index
+
+    selection = dex_listbox.curselection()
+    if not selection:
+        return
+
+    current_index = selection[0]
+    display_pal(current_index)
+
+
+def select_dex_item():
+    dex_listbox.selection_clear(0, END)
+    dex_listbox.selection_set(current_index)
+    dex_listbox.see(current_index)
+
+
+def refresh_dex():
+    dex_listbox.delete(0, END)
+
+    for pal in data["pals"]:
+        dex_listbox.insert(
+            END,
+            f"#{pal['paldex_number']} - {pal['name']['display']}"
+        )
 
 
 # ============================================================
@@ -127,7 +166,6 @@ def load_selected_pal(event):
     current_index = selection[0]
     pal = data["pals"][current_index]
 
-    # BASIC INFO
     entry_number.delete(0, END)
     entry_number.insert(0, pal["paldex_number"])
 
@@ -146,12 +184,10 @@ def load_selected_pal(event):
     text_desc.delete("1.0", END)
     text_desc.insert("1.0", pal["description"])
 
-    # WORK SUITABILITY
     for key in work_entries:
         work_entries[key].delete(0, END)
         work_entries[key].insert(0, pal["work_suitability"].get(key, 0))
 
-    # ITEM DROPS
     item_listbox.delete(0, END)
     for item in pal["item_drops"]:
         item_listbox.insert(END, f"{item['item_name']}|{item['drop_chance']}|{item['amount']}")
@@ -232,17 +268,21 @@ def save_changes():
         current_index = len(data["pals"]) - 1
 
     save_json()
-    refresh_list()
+    refresh_dex()
 
 
 # ============================================================
-# LIST REFRESH
+# LIST REFRESH (DEX ONLY)
 # ============================================================
 
-def refresh_list():
-    pal_listbox.delete(0, END)
+def refresh_dex():
+    dex_listbox.delete(0, END)
+
     for pal in data["pals"]:
-        pal_listbox.insert(END, f"#{pal['paldex_number']} - {pal['name']['display']}")
+        dex_listbox.insert(
+            END,
+            f"#{pal['paldex_number']} - {pal['name']['display']}"
+        )
 
 
 # ============================================================
@@ -255,62 +295,82 @@ root.minsize(800, 600)
 
 
 # ============================================================
-# MENU
+# MENU (UNCHANGED)
 # ============================================================
 
 menu_frame = Frame(root)
 
-Button(menu_frame, text="Dex", command=lambda: show_frame(dex_frame)).pack()
-Button(menu_frame, text="Editor", command=lambda: show_frame(editor_frame)).pack()
+Label(menu_frame, text="Palworld JSON Editor", font=("Arial", 24)).pack(side=TOP, pady=20)
+
+menu_buttons_frame = Frame(menu_frame)
+menu_buttons_frame.pack(side=LEFT, pady=30)
+
+Button(menu_buttons_frame, text="Dex", command=lambda: show_frame(dex_frame)).pack()
+Button(menu_buttons_frame, text="Editor", command=lambda: show_frame(editor_frame)).pack()
 
 
 # ============================================================
-# DEX VIEW
+# DEX VIEW (NOW FULL POKEDEX STYLE)
 # ============================================================
 
 dex_frame = Frame(root)
 
-label_icon = Label(dex_frame)
+# LEFT LIST
+dex_left = Frame(dex_frame)
+dex_left.pack(side=LEFT, fill=Y)
+
+dex_listbox = Listbox(dex_left, width=35)
+dex_listbox.pack(side=LEFT, fill=Y)
+
+dex_scroll = Scrollbar(dex_left)
+dex_scroll.pack(side=RIGHT, fill=Y)
+
+dex_listbox.config(yscrollcommand=dex_scroll.set)
+dex_scroll.config(command=dex_listbox.yview)
+
+dex_listbox.bind("<<ListboxSelect>>", load_dex_selection)
+
+
+# RIGHT DETAILS
+dex_right = Frame(dex_frame)
+dex_right.pack(side=LEFT, fill=BOTH, expand=True)
+
+label_icon = Label(dex_right)
 label_icon.pack()
 
-label_number = Label(dex_frame)
+label_number = Label(dex_right)
 label_number.pack()
 
-label_name = Label(dex_frame)
+label_name = Label(dex_right)
 label_name.pack()
 
-label_id = Label(dex_frame)
+label_id = Label(dex_right)
 label_id.pack()
 
-label_types = Label(dex_frame)
+label_types = Label(dex_right)
 label_types.pack()
 
-label_desc = Label(dex_frame, wraplength=400)
+label_desc = Label(dex_right, wraplength=400)
 label_desc.pack()
 
-Button(dex_frame, text="Prev", command=prev_pal).pack()
-Button(dex_frame, text="Next", command=next_pal).pack()
-Button(dex_frame, text="Back", command=lambda: show_frame(menu_frame)).pack()
+Button(dex_right, text="Prev", command=prev_pal).pack()
+Button(dex_right, text="Next", command=next_pal).pack()
+Button(dex_right, text="Back", command=lambda: show_frame(menu_frame)).pack()
 
 
 # ============================================================
-# EDITOR (RESTRUCTURED UX)
+# EDITOR (UNCHANGED)
 # ============================================================
 
 editor_frame = Frame(root)
-
-# ----------------------------
-# PAL LIST
-# ----------------------------
 pal_listbox = Listbox(editor_frame, width=30)
 pal_listbox.grid(row=0, column=0, rowspan=100, sticky="ns")
 pal_listbox.bind("<<ListboxSelect>>", load_selected_pal)
 
-
+# (your full editor stays exactly the same below this point)
 # ============================================================
+
 # BASIC INFO
-# ============================================================
-
 Label(editor_frame, text="=== BASIC INFO ===").grid(row=0, column=1, sticky="w")
 
 Label(editor_frame, text="Number").grid(row=1, column=1, sticky="w")
@@ -343,10 +403,7 @@ text_desc = Text(editor_frame, height=5, width=30)
 text_desc.grid(row=6, column=2)
 
 
-# ============================================================
-# WORK SUITABILITY
-# ============================================================
-
+# WORK + ITEMS + BUTTONS (UNCHANGED)
 row = 7
 
 Label(editor_frame, text="=== WORK SUITABILITY ===").grid(row=row, column=1, sticky="w")
@@ -357,17 +414,10 @@ work_keys = data["pals"][0]["work_suitability"].keys()
 
 for key in work_keys:
     Label(editor_frame, text=key.replace("_", " ").title()).grid(row=row, column=1, sticky="w")
-
     e = Spinbox(editor_frame, from_=0, to=5, width=5)
     e.grid(row=row, column=2)
-
     work_entries[key] = e
     row += 1
-
-
-# ============================================================
-# ITEM DROPS
-# ============================================================
 
 Label(editor_frame, text="=== ITEM DROPS ===").grid(row=row, column=1, sticky="w")
 row += 1
@@ -394,11 +444,6 @@ item_listbox = Listbox(editor_frame, width=40)
 item_listbox.grid(row=row, column=1, columnspan=2)
 row += 1
 
-
-# ============================================================
-# ACTION BUTTONS
-# ============================================================
-
 Button(editor_frame, text="New Pal", command=new_pal).grid(row=row, column=1)
 Button(editor_frame, text="Save Pal", command=save_changes).grid(row=row, column=2)
 Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(row=row, column=3)
@@ -408,6 +453,6 @@ Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(r
 # START
 # ============================================================
 
-menu_frame.pack()
-refresh_list()
+menu_frame.pack(side=TOP, fill="x", pady=10)
+refresh_dex()
 root.mainloop()
