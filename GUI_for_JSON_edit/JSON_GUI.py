@@ -31,6 +31,7 @@ def save_json():
 data = load_json()
 current_index = 0
 current_image = None
+editor_item_drops = []
 
 
 # ============================================================
@@ -69,16 +70,17 @@ def display_pal(index):
     )
     label_work_suitability.config(text=work_text)
 
+    item_drops_listbox.delete(0, END)
+    item_drops_listbox.insert(END, f"{'Name':<24}{'Dropchance':<12}{'Amount':<8}")
+    item_drops_listbox.insert(END, "".ljust(46, "-"))
     if pal.get("item_drops"):
-        item_lines = []
         for item in pal["item_drops"]:
-            item_lines.append(
-                f"Name: {item['item_name']}\nDropchance: {item['drop_chance']}\nAmount: {item['amount']}"
+            item_drops_listbox.insert(
+                END,
+                f"{item['item_name'][:22]:<24}{item['drop_chance']:<12}{item['amount']:<8}"
             )
-        item_text = "\n\n".join(item_lines)
     else:
-        item_text = "No item drops"
-    label_item_drops.config(text=item_text)
+        item_drops_listbox.insert(END, "No item drops")
 
     try:
         icon_path = os.path.join(ICON_DIR, pal["icon_path"])
@@ -169,6 +171,21 @@ def preview_icon():
         label_icon_preview.config(text="Icon not found", image="")
 
 
+def refresh_editor_item_list():
+    item_listbox.delete(0, END)
+    item_listbox.insert(END, f"{'Name':<24}{'Dropchance':<12}{'Amount':<8}")
+    item_listbox.insert(END, "".ljust(46, "-"))
+
+    if editor_item_drops:
+        for item in editor_item_drops:
+            item_listbox.insert(
+                END,
+                f"{item['item_name'][:22]:<24}{item['drop_chance']:<12}{item['amount']:<8}"
+            )
+    else:
+        item_listbox.insert(END, "No item drops")
+
+
 # ============================================================
 # LOAD SELECTED PAL INTO EDITOR
 # ============================================================
@@ -206,9 +223,9 @@ def load_selected_pal(event):
         work_entries[key].delete(0, END)
         work_entries[key].insert(0, pal["work_suitability"].get(key, 0))
 
-    item_listbox.delete(0, END)
-    for item in pal["item_drops"]:
-        item_listbox.insert(END, f"{item['item_name']}|{item['drop_chance']}|{item['amount']}")
+    editor_item_drops.clear()
+    editor_item_drops.extend(pal["item_drops"])
+    refresh_editor_item_list()
 
 
 # ============================================================
@@ -231,7 +248,8 @@ def new_pal():
         work_entries[key].delete(0, END)
         work_entries[key].insert(0, "0")
 
-    item_listbox.delete(0, END)
+    editor_item_drops.clear()
+    refresh_editor_item_list()
 
 
 # ============================================================
@@ -239,12 +257,17 @@ def new_pal():
 # ============================================================
 
 def add_item():
-    name = entry_item_name.get()
-    chance = entry_item_chance.get()
-    amount = entry_item_amount.get()
+    name = entry_item_name.get().strip()
+    chance = entry_item_chance.get().strip()
+    amount = entry_item_amount.get().strip()
 
     if name:
-        item_listbox.insert(END, f"{name}|{chance}|{amount}")
+        editor_item_drops.append({
+            "item_name": name,
+            "drop_chance": chance,
+            "amount": amount
+        })
+        refresh_editor_item_list()
 
 
 # ============================================================
@@ -255,17 +278,7 @@ def save_changes():
     global current_index
 
     work_data = {k: int(work_entries[k].get()) for k in work_entries}
-
-    item_drops = []
-    for i in range(item_listbox.size()):
-        raw = item_listbox.get(i)
-        parts = raw.split("|")
-        if len(parts) == 3:
-            item_drops.append({
-                "item_name": parts[0],
-                "drop_chance": parts[1],
-                "amount": parts[2]
-            })
+    item_drops = list(editor_item_drops)
 
     new_entry = {
         "paldex_number": entry_number.get(),
@@ -285,6 +298,9 @@ def save_changes():
     else:
         data["pals"].append(new_entry)
         current_index = len(data["pals"]) - 1
+
+    editor_item_drops.clear()
+    editor_item_drops.extend(new_entry["item_drops"])
 
     save_json()
     refresh_all_listboxes()
@@ -361,8 +377,9 @@ label_desc.pack()
 label_work_suitability = Label(dex_right, wraplength=400, justify=LEFT)
 label_work_suitability.pack()
 
-label_item_drops = Label(dex_right, wraplength=400, justify=LEFT)
-label_item_drops.pack()
+Label(dex_right, text="Item Drops:", font=("Arial", 10, "bold")).pack(anchor="w", pady=(10, 0))
+item_drops_listbox = Listbox(dex_right, width=50, height=6, font=("Courier New", 10))
+item_drops_listbox.pack(fill="x")
 
 Button(dex_right, text="Prev", command=prev_pal).pack()
 Button(dex_right, text="Next", command=next_pal).pack()
@@ -461,7 +478,7 @@ row += 1
 Button(editor_frame, text="➕ Add Item", command=add_item).grid(row=row, column=2)
 row += 1
 
-item_listbox = Listbox(editor_frame, width=40)
+item_listbox = Listbox(editor_frame, width=50, height=8, font=("Courier New", 10))
 item_listbox.grid(row=row, column=1, columnspan=2)
 row += 1
 
