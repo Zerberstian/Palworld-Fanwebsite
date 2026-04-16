@@ -65,10 +65,15 @@ def display_pal(index):
     label_types.config(text=" / ".join(pal["types"]))
     label_desc.config(text=pal["description"])
 
-    work_text = "\n".join(
-        f"{key}: {value}" for key, value in pal["work_suitability"].items()
+    work_lines = [
+        f"{'Task':<30}Value",
+        f"{'-' * 30} {'-' * 5}"
+    ]
+    work_lines.extend(
+        f"{key.replace('_', ' ').title():<30}{value}"
+        for key, value in pal["work_suitability"].items()
     )
-    label_work_suitability.config(text=work_text)
+    label_work_suitability.config(text="\n".join(work_lines))
 
     item_drops_listbox.delete(0, END)
     item_drops_listbox.insert(END, f"{'Name':<24}{'Dropchance':<12}{'Amount':<8}")
@@ -326,8 +331,8 @@ Label(menu_frame, text="Palworld JSON Editor", font=("Arial", 24)).pack(side=TOP
 menu_buttons_frame = Frame(menu_frame)
 menu_buttons_frame.pack(side=LEFT, pady=30)
 
-Button(menu_buttons_frame, text="Dex", command=lambda: show_frame(dex_frame)).pack()
-Button(menu_buttons_frame, text="Editor", command=lambda: show_frame(editor_frame)).pack()
+Button(menu_buttons_frame, text="Dex", command=lambda: show_frame(dex_frame), font=("Arial", 18)).pack()
+Button(menu_buttons_frame, text="Editor", command=lambda: show_frame(editor_frame), font=("Arial", 18)).pack()
 
 
 # ============================================================
@@ -374,16 +379,16 @@ label_types.pack()
 label_desc = Label(dex_right, wraplength=400)
 label_desc.pack()
 
-label_work_suitability = Label(dex_right, wraplength=400, justify=LEFT)
+label_work_suitability = Label(dex_right, wraplength=400, justify=LEFT, font=("Courier New", 10))
 label_work_suitability.pack()
 
 Label(dex_right, text="Item Drops:", font=("Arial", 10, "bold")).pack(anchor="w", pady=(10, 0))
 item_drops_listbox = Listbox(dex_right, width=50, height=6, font=("Courier New", 10))
 item_drops_listbox.pack(fill="x")
 
-Button(dex_right, text="Prev", command=prev_pal).pack()
-Button(dex_right, text="Next", command=next_pal).pack()
-Button(dex_right, text="Back", command=lambda: show_frame(menu_frame)).pack()
+Button(dex_right, text="Prev", command=prev_pal, font=("Arial", 18)).pack()
+Button(dex_right, text="Next", command=next_pal, font=("Arial", 18)).pack()
+Button(dex_right, text="Back", command=lambda: show_frame(menu_frame), font=("Arial", 18)).pack()
 
 # ============================================================
 # refresh_all_listboxes() - NEW FUNCTION TO REFRESH BOTH LISTBOXES
@@ -475,16 +480,16 @@ entry_item_amount = Entry(editor_frame)
 entry_item_amount.grid(row=row, column=2)
 row += 1
 
-Button(editor_frame, text="➕ Add Item", command=add_item).grid(row=row, column=2)
+Button(editor_frame, text="➕ Add Item", command=add_item, font=("Arial", 18)).grid(row=row, column=2)
 row += 1
 
 item_listbox = Listbox(editor_frame, width=50, height=8, font=("Courier New", 10))
 item_listbox.grid(row=row, column=1, columnspan=2)
 row += 1
 
-Button(editor_frame, text="New Pal", command=new_pal).grid(row=row, column=1)
-Button(editor_frame, text="Save Pal", command=save_changes).grid(row=row, column=2)
-Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(row=row, column=3)
+Button(editor_frame, text="New Pal", command=new_pal, font=("Arial", 18)).grid(row=row, column=1)
+Button(editor_frame, text="Save Pal", command=save_changes, font=("Arial", 18)).grid(row=row, column=2)
+Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame), font=("Arial", 18)).grid(row=row, column=3)
 
 
 # ============================================================
