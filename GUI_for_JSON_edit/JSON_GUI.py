@@ -572,9 +572,9 @@ entry_item_amount = Entry(editor_frame)
 entry_item_amount.grid(row=row, column=2)
 row += 1
 
-Button(editor_frame, text="➕ Add Item", command=add_item, font=("Arial", 18)).grid(row=row, column=1)
-Button(editor_frame, text="✏️ Edit Item", command=update_item, font=("Arial", 18)).grid(row=row, column=2)
-Button(editor_frame, text="🗑️ Delete Item", command=remove_item, font=("Arial", 18)).grid(row=row, column=3)
+Button(editor_frame, text="➕ Add Item", command=add_item, font=("Arial", 15)).grid(row=row, column=1)
+Button(editor_frame, text="✏️ Edit Item", command=update_item, font=("Arial", 15)).grid(row=row, column=2)
+Button(editor_frame, text="🗑️ Delete Item", command=remove_item, font=("Arial", 15)).grid(row=row, column=3)
 row += 1
 
 item_listbox = Listbox(editor_frame, width=50, height=8, font=("Courier New", 10))
@@ -582,9 +582,10 @@ item_listbox.grid(row=row, column=1, columnspan=3)
 item_listbox.bind("<<ListboxSelect>>", load_selected_editor_item)
 row += 1
 
-Button(editor_frame, text="New Pal", command=new_pal, font=("Arial", 18)).grid(row=row, column=1)
-Button(editor_frame, text="Save Pal", command=save_changes, font=("Arial", 18)).grid(row=row, column=2)
-Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame), font=("Arial", 18)).grid(row=row, column=3)
+Button(editor_frame, text="New Pal", command=new_pal, font=("Arial", 15)).grid(row=row, column=1)
+Button(editor_frame, text="Save Pal", command=save_changes, font=("Arial", 15)).grid(row=row, column=2)
+Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame), font=("Arial", 15
+)).grid(row=row, column=3)
 
 
 # ============================================================
