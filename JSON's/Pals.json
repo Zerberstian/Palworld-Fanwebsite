@@ -10,7 +10,7 @@
             "types": [
                 "Neutral"
             ],
-            "description": "Ein Spaziergang auf einem Hügel neigt dazu, mit diesem Kumpel zu enden, der wieder nach unten taumelt. Dies führt dazu, dass es schwindlig wird und sich nicht bewegen kann, was es leicht macht, es zu erfassen und zu töten. Infolgedessen ist dieser Kumpel bis ganz unten in der Nahrungskette selbst gestürzt.",
+            "description": "Mit seinem eigenen Körperwasser kann dieser Pal überall Wellen erzeugen. Es surft in Eile, aber die resultierende Geschwindigkeit endet oft bei einer tödlichen Kollision.",
             "work_suitability": {
                 "planting": 0,
                 "watering": 0,
@@ -27,13 +27,13 @@
             },
             "item_drops": [
                 {
-                    "item_name": "Wool",
-                    "drop_chance": 100,
-                    "amount": "1-3"
+                    "item_name": "Leather",
+                    "drop_chance": "100",
+                    "amount": "1-1"
                 },
                 {
-                    "item_name": "Lamball Meat",
-                    "drop_chance": 100,
+                    "item_name": "Pal Fluids",
+                    "drop_chance": "100",
                     "amount": "1-1"
                 }
             ]
@@ -204,6 +204,33 @@
                 "transporting": 0,
                 "kindling": 0,
                 "cooling": 1,
+                "generating_electricity": 0,
+                "handiwork": 0,
+                "gathering": 0,
+                "farming": 0,
+                "medicine production": 0
+            },
+            "item_drops": []
+        },
+        {
+            "paldex_number": "6",
+            "name": {
+                "display": "Fuack",
+                "internal_id": "fuack"
+            },
+            "icon_path": "../assets/Pal_Icons/T_BluePlatypus_icon_normal.png",
+            "types": [
+                "Wasser"
+            ],
+            "description": "Mit seinem eigenen Körperwasser kann dieser Pal überall Wellen erzeugen. Es surft in Eile, aber die resultierende Geschwindigkeit endet oft bei einer tödlichen Kollision.",
+            "work_suitability": {
+                "planting": 0,
+                "watering": 0,
+                "mining": 0,
+                "logging": 0,
+                "transporting": 0,
+                "kindling": 0,
+                "cooling": 0,
                 "generating_electricity": 0,
                 "handiwork": 0,
                 "gathering": 0,
