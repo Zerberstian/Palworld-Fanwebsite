@@ -137,6 +137,7 @@ def preview_icon():
 
     icon_name = entry_icon.get().strip()
     if not icon_name:
+        label_icon_preview.config(text="No Preview", image="")
         return
 
     icon_path = os.path.join(ICON_DIR, icon_name)
@@ -180,6 +181,7 @@ def load_selected_pal(event):
 
     entry_icon.delete(0, END)
     entry_icon.insert(0, pal["icon_path"])
+    preview_icon()
 
     text_desc.delete("1.0", END)
     text_desc.insert("1.0", pal["description"])
@@ -207,6 +209,7 @@ def new_pal():
     entry_types.delete(0, END)
     entry_icon.delete(0, END)
     text_desc.delete("1.0", END)
+    label_icon_preview.config(text="No Preview", image="")
 
     for key in work_entries:
         work_entries[key].delete(0, END)
@@ -268,7 +271,7 @@ def save_changes():
         current_index = len(data["pals"]) - 1
 
     save_json()
-    refresh_dex()
+    refresh_all_listboxes()
 
 
 # ============================================================
@@ -357,6 +360,20 @@ Button(dex_right, text="Prev", command=prev_pal).pack()
 Button(dex_right, text="Next", command=next_pal).pack()
 Button(dex_right, text="Back", command=lambda: show_frame(menu_frame)).pack()
 
+# ============================================================
+# refresh_all_listboxes() - NEW FUNCTION TO REFRESH BOTH LISTBOXES
+# ============================================================
+
+def refresh_all_listboxes():
+    # Refresh dex listbox
+    dex_listbox.delete(0, END)
+    # Refresh pal listbox
+    pal_listbox.delete(0, END)
+    
+    for pal in data["pals"]:
+        display_text = f"#{pal['paldex_number']} - {pal['name']['display']}"
+        dex_listbox.insert(END, display_text)
+        pal_listbox.insert(END, display_text)
 
 # ============================================================
 # EDITOR (UNCHANGED)
@@ -367,8 +384,6 @@ pal_listbox = Listbox(editor_frame, width=30)
 pal_listbox.grid(row=0, column=0, rowspan=100, sticky="ns")
 pal_listbox.bind("<<ListboxSelect>>", load_selected_pal)
 
-# (your full editor stays exactly the same below this point)
-# ============================================================
 
 # BASIC INFO
 Label(editor_frame, text="=== BASIC INFO ===").grid(row=0, column=1, sticky="w")
@@ -392,8 +407,6 @@ entry_types.grid(row=4, column=2)
 Label(editor_frame, text="Icon").grid(row=5, column=1, sticky="w")
 entry_icon = Entry(editor_frame)
 entry_icon.grid(row=5, column=2)
-
-Button(editor_frame, text="Preview Icon", command=preview_icon).grid(row=5, column=3)
 
 label_icon_preview = Label(editor_frame, text="No Preview")
 label_icon_preview.grid(row=6, column=3)
@@ -454,5 +467,5 @@ Button(editor_frame, text="Back", command=lambda: show_frame(menu_frame)).grid(r
 # ============================================================
 
 menu_frame.pack(side=TOP, fill="x", pady=10)
-refresh_dex()
+refresh_all_listboxes()
 root.mainloop()
