@@ -32,6 +32,7 @@ data = load_json()
 current_index = 0
 current_image = None
 editor_item_drops = []
+selected_editor_item = None
 
 
 # ============================================================
@@ -190,6 +191,10 @@ def refresh_editor_item_list():
     else:
         item_listbox.insert(END, "No item drops")
 
+    if selected_editor_item is not None and 0 <= selected_editor_item < len(editor_item_drops):
+        item_listbox.selection_clear(0, END)
+        item_listbox.selection_set(selected_editor_item + 2)
+
 
 # ============================================================
 # LOAD SELECTED PAL INTO EDITOR
@@ -230,7 +235,41 @@ def load_selected_pal(event):
 
     editor_item_drops.clear()
     editor_item_drops.extend(pal["item_drops"])
+    clear_selected_editor_item()
     refresh_editor_item_list()
+
+
+# ============================================================
+# EDITOR ITEM SELECTION
+
+def clear_selected_editor_item():
+    global selected_editor_item
+    selected_editor_item = None
+
+
+def load_selected_editor_item(event):
+    global selected_editor_item
+
+    selection = item_listbox.curselection()
+    if not selection:
+        return
+
+    item_index = selection[0] - 2
+    if item_index < 0 or item_index >= len(editor_item_drops):
+        clear_selected_editor_item()
+        return
+
+    selected_editor_item = item_index
+    item = editor_item_drops[item_index]
+
+    entry_item_name.delete(0, END)
+    entry_item_name.insert(0, item["item_name"])
+
+    entry_item_chance.delete(0, END)
+    entry_item_chance.insert(0, item["drop_chance"])
+
+    entry_item_amount.delete(0, END)
+    entry_item_amount.insert(0, item["amount"])
 
 
 # ============================================================
@@ -262,6 +301,8 @@ def new_pal():
 # ============================================================
 
 def add_item():
+    global selected_editor_item
+
     name = entry_item_name.get().strip()
     chance = entry_item_chance.get().strip()
     amount = entry_item_amount.get().strip()
@@ -272,7 +313,40 @@ def add_item():
             "drop_chance": chance,
             "amount": amount
         })
+        selected_editor_item = len(editor_item_drops) - 1
         refresh_editor_item_list()
+
+
+def update_item():
+    global selected_editor_item
+
+    if selected_editor_item is None:
+        return
+
+    name = entry_item_name.get().strip()
+    chance = entry_item_chance.get().strip()
+    amount = entry_item_amount.get().strip()
+
+    if not name:
+        return
+
+    editor_item_drops[selected_editor_item] = {
+        "item_name": name,
+        "drop_chance": chance,
+        "amount": amount
+    }
+    refresh_editor_item_list()
+
+
+def remove_item():
+    global selected_editor_item
+
+    if selected_editor_item is None:
+        return
+
+    del editor_item_drops[selected_editor_item]
+    clear_selected_editor_item()
+    refresh_editor_item_list()
 
 
 # ============================================================
@@ -480,11 +554,14 @@ entry_item_amount = Entry(editor_frame)
 entry_item_amount.grid(row=row, column=2)
 row += 1
 
-Button(editor_frame, text="➕ Add Item", command=add_item, font=("Arial", 18)).grid(row=row, column=2)
+Button(editor_frame, text="➕ Add Item", command=add_item, font=("Arial", 18)).grid(row=row, column=1)
+Button(editor_frame, text="✏️ Edit Item", command=update_item, font=("Arial", 18)).grid(row=row, column=2)
+Button(editor_frame, text="🗑️ Delete Item", command=remove_item, font=("Arial", 18)).grid(row=row, column=3)
 row += 1
 
 item_listbox = Listbox(editor_frame, width=50, height=8, font=("Courier New", 10))
-item_listbox.grid(row=row, column=1, columnspan=2)
+item_listbox.grid(row=row, column=1, columnspan=3)
+item_listbox.bind("<<ListboxSelect>>", load_selected_editor_item)
 row += 1
 
 Button(editor_frame, text="New Pal", command=new_pal, font=("Arial", 18)).grid(row=row, column=1)
