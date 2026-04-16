@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import filedialog
 import os
 import json
 from PIL import Image, ImageTk
@@ -14,7 +15,7 @@ from PIL import Image, ImageTk
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 JSON_PATH = os.path.join(BASE_DIR, "..", "JSON's", "Pals.json")
-ICON_DIR = os.path.join(BASE_DIR, "..", "Icons")
+ICON_DIR = os.path.join(BASE_DIR, "..", "assets", "Pal_Icons")
 
 # ============================================================
 # JSON HANDLING
@@ -89,7 +90,8 @@ def display_pal(index):
         item_drops_listbox.insert(END, "No item drops")
 
     try:
-        icon_path = os.path.join(ICON_DIR, pal["icon_path"])
+        icon_name = os.path.basename(pal["icon_path"])
+        icon_path = os.path.join(ICON_DIR, icon_name)
 
         img = Image.open(icon_path)
         img = img.resize((80, 80))
@@ -164,6 +166,7 @@ def preview_icon():
         label_icon_preview.config(text="No Preview", image="")
         return
 
+    icon_name = os.path.basename(icon_name)
     icon_path = os.path.join(ICON_DIR, icon_name)
 
     try:
@@ -175,6 +178,20 @@ def preview_icon():
 
     except:
         label_icon_preview.config(text="Icon not found", image="")
+
+
+def browse_icon():
+    file_path = filedialog.askopenfilename(
+        initialdir=ICON_DIR,
+        title="Select Pal icon",
+        filetypes=[("Image Files", "*.png *.jpg *.jpeg *.gif"), ("All Files", "*")]
+    )
+    if not file_path:
+        return
+
+    entry_icon.delete(0, END)
+    entry_icon.insert(0, os.path.basename(file_path))
+    preview_icon()
 
 
 def refresh_editor_item_list():
@@ -223,7 +240,7 @@ def load_selected_pal(event):
     entry_types.insert(0, ", ".join(pal["types"]))
 
     entry_icon.delete(0, END)
-    entry_icon.insert(0, pal["icon_path"])
+    entry_icon.insert(0, os.path.basename(pal["icon_path"]))
     preview_icon()
 
     text_desc.delete("1.0", END)
@@ -365,7 +382,7 @@ def save_changes():
             "display": entry_name.get(),
             "internal_id": entry_id.get()
         },
-        "icon_path": entry_icon.get().strip(),
+        "icon_path": f"../assets/Pal_Icons/{os.path.basename(entry_icon.get().strip())}",
         "types": [t.strip() for t in entry_types.get().split(",")],
         "description": text_desc.get("1.0", END).strip(),
         "work_suitability": work_data,
@@ -508,9 +525,10 @@ Label(editor_frame, text="Types").grid(row=4, column=1, sticky="w")
 entry_types = Entry(editor_frame)
 entry_types.grid(row=4, column=2)
 
-Label(editor_frame, text="Icon").grid(row=5, column=1, sticky="w")
+Label(editor_frame, text="Icon filename").grid(row=5, column=1, sticky="w")
 entry_icon = Entry(editor_frame)
 entry_icon.grid(row=5, column=2)
+Button(editor_frame, text="Browse", command=lambda: browse_icon(), font=("Arial", 12)).grid(row=5, column=3, padx=5)
 
 label_icon_preview = Label(editor_frame, text="No Preview")
 label_icon_preview.grid(row=6, column=3)
