@@ -64,6 +64,22 @@ def display_pal(index):
     label_types.config(text=" / ".join(pal["types"]))
     label_desc.config(text=pal["description"])
 
+    work_text = "\n".join(
+        f"{key}: {value}" for key, value in pal["work_suitability"].items()
+    )
+    label_work_suitability.config(text=work_text)
+
+    if pal.get("item_drops"):
+        item_lines = []
+        for item in pal["item_drops"]:
+            item_lines.append(
+                f"Name: {item['item_name']}\nDropchance: {item['drop_chance']}\nAmount: {item['amount']}"
+            )
+        item_text = "\n\n".join(item_lines)
+    else:
+        item_text = "No item drops"
+    label_item_drops.config(text=item_text)
+
     try:
         icon_path = os.path.join(ICON_DIR, pal["icon_path"])
 
@@ -275,20 +291,6 @@ def save_changes():
 
 
 # ============================================================
-# LIST REFRESH (DEX ONLY)
-# ============================================================
-
-def refresh_dex():
-    dex_listbox.delete(0, END)
-
-    for pal in data["pals"]:
-        dex_listbox.insert(
-            END,
-            f"#{pal['paldex_number']} - {pal['name']['display']}"
-        )
-
-
-# ============================================================
 # UI ROOT
 # ============================================================
 
@@ -355,6 +357,12 @@ label_types.pack()
 
 label_desc = Label(dex_right, wraplength=400)
 label_desc.pack()
+
+label_work_suitability = Label(dex_right, wraplength=400, justify=LEFT)
+label_work_suitability.pack()
+
+label_item_drops = Label(dex_right, wraplength=400, justify=LEFT)
+label_item_drops.pack()
 
 Button(dex_right, text="Prev", command=prev_pal).pack()
 Button(dex_right, text="Next", command=next_pal).pack()
